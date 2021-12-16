@@ -1,3 +1,4 @@
+import java.util.HashMap;
 
 public class EssayAnswer extends Answer {
     /**
@@ -61,6 +62,18 @@ public class EssayAnswer extends Answer {
         }
 
         return isCorrect;
+    }
+
+    @Override
+    public void updateAnswerCounter(Question q, HashMap<String, Integer> counterMap) {
+        String ans = this.getAnswer().toLowerCase();
+
+        if (counterMap.containsKey(ans)) {
+            int total = counterMap.get(ans);
+            counterMap.put(ans, ++total);
+        } else {
+            counterMap.put(ans, 1);
+        }
     }
 
 }

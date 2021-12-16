@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.HashMap;
 
 public abstract class Answer implements Serializable {
     /**
@@ -30,4 +31,6 @@ public abstract class Answer implements Serializable {
             }
         }
     }
+
+    public abstract void updateAnswerCounter(Question q, HashMap<String, Integer> counterMap);
 }

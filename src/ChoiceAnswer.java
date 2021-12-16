@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ChoiceAnswer extends Answer {
@@ -68,5 +69,18 @@ public class ChoiceAnswer extends Answer {
         }
 
         return isCorrect;
+    }
+
+    @Override
+    public void updateAnswerCounter(Question q, HashMap<String, Integer> counterMap) {
+        for (String ans : this.getAnswer()) {
+            String choiceOption = ans.toLowerCase().trim();
+            Integer total = counterMap.get(choiceOption);
+            if (total != null) {
+                counterMap.put(choiceOption, total + 1);
+            } else {
+                counterMap.put(choiceOption, 1);
+            }
+        }
     }
 }

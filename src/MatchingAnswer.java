@@ -61,4 +61,17 @@ public class MatchingAnswer extends Answer {
         return isCorrect;
     }
 
+    @Override
+    public void updateAnswerCounter(Question q, HashMap<String, Integer> counterMap) {
+        for (String left : this.answer.keySet()) {
+            String right = this.answer.get(left);
+            String match = left + '-' + right;
+            Integer count = counterMap.get(match);
+            if (count != null) {
+                counterMap.put(match, count++);
+            } else {
+                counterMap.put(match, 1);
+            }
+        }
+    }
 }

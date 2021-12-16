@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Choice extends Question {
@@ -139,20 +140,16 @@ public class Choice extends Question {
     public void tabulateAnswers(UI ui, List<Answer> answers) {
         ui.display("\n");
         print(ui);
+        HashMap<String, Integer> counterMap = new HashMap<>();
+
+        for (Answer a : answers) {
+            a.updateAnswerCounter(this, counterMap);
+        }
+
         for (int j = 0; j < choices.size(); j++) {
-            int total = 0;
             String choiceOption = String.format("%s) %s", String.valueOf((char) ('a' + j)), getChoiceInt(j));
+            int total = counterMap.get(choiceOption);
             ui.display(choiceOption + " : ");
-
-            for (Answer a : answers) {
-                ChoiceAnswer chAns = (ChoiceAnswer) a;
-                for (String ans : chAns.getAnswer()) {
-                    if (ans.equalsIgnoreCase(choiceOption)) {
-                        total++;
-                    }
-                }
-            }
-
             ui.display(String.format("%d\n", total));
         }
     }

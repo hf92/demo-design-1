@@ -29,24 +29,14 @@ public class Written extends Question {
     public void tabulateAnswers(UI ui, List<Answer> answers) {
         ui.display("\n");
         print(ui);
-        HashMap<String, String> totals = new HashMap<String, String>();
+        HashMap<String, Integer> counterMap = new HashMap<>();
 
         for (Answer a : answers) {
-            EssayAnswer essAns = (EssayAnswer) a;
-            String ans = essAns.getAnswer().toLowerCase();
-
-            if (totals.containsKey(ans)) {
-                int total = Integer.parseInt(totals.get(ans));
-                totals.remove(ans);
-                totals.put(ans, String.format("%d", ++total));
-            } else {
-                totals.put(ans, String.format("%d", 1));
-            }
+            a.updateAnswerCounter(this, counterMap);
         }
 
-        for (String s : totals.keySet()) {
-            ui.display(String.format("%s : %s\n", s, totals.get(s)));
+        for (String s : counterMap.keySet()) {
+            ui.display(String.format("%s : %d\n", s, counterMap.get(s)));
         }
     }
-
 }

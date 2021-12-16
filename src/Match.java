@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Match extends Question {
@@ -144,6 +145,13 @@ public class Match extends Question {
     @Override
     public void tabulateAnswers(UI ui, List<Answer> answers) {
         ui.display("\n");
+
+        HashMap<String, Integer> counterMap = new HashMap<>();
+
+        for (Answer a : answers) {
+            a.updateAnswerCounter(this, counterMap);
+        }
+
         print(ui);
         for (int j = 0; j < numberOfChoices; j++) {
             String choiceOption = String.format("%s) %s", String.valueOf((char) ('a' + j)), getLeftChoiceInt(j));
@@ -153,16 +161,7 @@ public class Match extends Question {
                 String choiceOptionRight = String.format("%s) %s", String.valueOf((char) ('a' + k)),
                         getRightChoiceInt(k));
                 ui.display("    " + choiceOptionRight + " : ");
-                int total = 0;
-
-                for (Answer a : answers) {
-                    MatchingAnswer mAns = (MatchingAnswer) a;
-
-                    if (mAns.getAnswer().get(choiceOption).equalsIgnoreCase(choiceOptionRight)) {
-                        total++;
-                    }
-                }
-                ui.display(String.format("%d\n", total));
+                ui.display(String.format("%d\n", counterMap.get(choiceOption + '-' + choiceOptionRight)));
             }
         }
     }
