@@ -1,5 +1,4 @@
 import java.io.Serializable;
-import java.util.List;
 
 public abstract class Question implements Serializable {
     /**
@@ -57,7 +56,4 @@ public abstract class Question implements Serializable {
     }
 
     public abstract void modifyChoices(UI ui);
-
-    public abstract void tabulateAnswers(UI ui, List<Answer> answers);
-
 }

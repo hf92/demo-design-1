@@ -30,7 +30,7 @@ public class MatchingAnswer extends Answer {
 
     @Override
     public void newAnswer(UI ui, Question q, boolean isCorrect) {
-        Match match = (Match) q;
+        Matching match = (Matching) q;
 
         for (int n = 0; n < match.getNumberOfChoices(); n++) {
             ui.display(String.format("Enter the match for %s: ", String.valueOf((char) ('a' + n))));

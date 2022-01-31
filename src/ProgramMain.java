@@ -28,9 +28,7 @@ public class ProgramMain {
             ui.display("9) Take a Survey\n");
             ui.display("10) Take a Test\n");
             ui.display("11) Grade a Test\n");
-            ui.display("12) Tabulate a Survey\n");
-            ui.display("13) Tabulate a Test\n");
-            ui.display("14) Quit\n");
+            ui.display("12) Quit\n");
 
             switch (ui.captureInt()) {
                 case 1:
@@ -67,12 +65,6 @@ public class ProgramMain {
                     gradeTest();
                     break;
                 case 12:
-                    tabulate(false);
-                    break;
-                case 13:
-                    tabulate(true);
-                    break;
-                case 14:
                     isGo = false;
                     break;
                 default:
@@ -158,7 +150,7 @@ public class ProgramMain {
     }
 
     private static void addMatchingQuestion(Survey sheet, boolean isTest, boolean isRanking) {
-        Match match = new Match();
+        Matching match = new Matching();
 
         if (isRanking) {
             match.newPrompt(ui);
@@ -303,8 +295,8 @@ public class ProgramMain {
                     Choice choice = (Choice) q;
                     ChoiceAnswer a = new ChoiceAnswer();
                     answerQuestion(answerSheet, choice, a);
-                } else if (q instanceof Match) {
-                    Match match = (Match) q;
+                } else if (q instanceof Matching) {
+                    Matching match = (Matching) q;
                     MatchingAnswer a = new MatchingAnswer();
                     answerQuestion(answerSheet, match, a);
                 }
@@ -400,8 +392,8 @@ public class ProgramMain {
                                         Choice choice = (Choice) q;
                                         ChoiceAnswer a = new ChoiceAnswer();
                                         addAnswer(sheet, choice, a);
-                                    } else if (q instanceof Match) {
-                                        Match match = (Match) q;
+                                    } else if (q instanceof Matching) {
+                                        Matching match = (Matching) q;
                                         MatchingAnswer a = new MatchingAnswer();
                                         addAnswer(sheet, match, a);
                                     }
@@ -451,27 +443,6 @@ public class ProgramMain {
         }
     }
 
-    private static void tabulate(boolean isTest) {
-        Survey sheet = selectLoaded(isTest);
-
-        if (sheet != null) {
-            if (answerSheets.containsKey(sheet)) {
-                for (Question q : sheet.getQuestions()) {
-                    List<Answer> ans = new ArrayList<Answer>();
-
-                    for (AnswerSheet a : answerSheets.get(sheet)) {
-                        ans.add(a.getAnswer(q));
-                    }
-                    if (!ans.isEmpty()) {
-                        q.tabulateAnswers(ui, ans);
-                    }
-                }
-            } else {
-                ui.display("No one has taken this test yet.\n");
-            }
-        }
-    }
-
     class PrintVisitor {
         private UI ui;
 
@@ -483,7 +454,7 @@ public class ProgramMain {
             q.print(ui);
         }
 
-        public void visit(Match q) {
+        public void visit(Matching q) {
             q.print(ui);
         }
 

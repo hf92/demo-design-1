@@ -1,5 +1,3 @@
-import java.util.HashMap;
-import java.util.List;
 
 public class Written extends Question {
     /**
@@ -23,20 +21,5 @@ public class Written extends Question {
 
     @Override
     public void modifyChoices(UI ui) {
-    }
-
-    @Override
-    public void tabulateAnswers(UI ui, List<Answer> answers) {
-        ui.display("\n");
-        print(ui);
-        HashMap<String, Integer> counterMap = new HashMap<>();
-
-        for (Answer a : answers) {
-            a.updateAnswerCounter(this, counterMap);
-        }
-
-        for (String s : counterMap.keySet()) {
-            ui.display(String.format("%s : %d\n", s, counterMap.get(s)));
-        }
     }
 }
